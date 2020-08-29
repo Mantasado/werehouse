@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->integer('ean', 13);
+            $table->integer('ean')->length(13);
             $table->foreignId('product_type_id');
             $table->string('color', 20);
             $table->boolean('active')->default(0);
