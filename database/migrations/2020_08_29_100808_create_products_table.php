@@ -16,12 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->integer('ean')->length(13);
-            $table->foreignId('product_type_id');
+            $table->bigInteger('ean');
+            $table->unsignedBigInteger('product_type_id')->unsigned();
+            $table->foreign('product_type_id')->references('id')->on('product_types');
             $table->string('color', 20);
             $table->boolean('active')->default(0);
-            $table->string('image', 100);
-            $table->foreignId('product_details_id');
+            $table->string('image', 100)->default('public/no_image.png');
             $table->boolean('is_deleted')->default(0);
             $table->timestamps();
         });
