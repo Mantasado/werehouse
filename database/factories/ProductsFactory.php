@@ -49,13 +49,13 @@ $factory->define(Products::class, function (Faker $faker) {
         ],
     ];
 
-    $randomNumber = $faker->numberBetween(0, 4);
+    $randomNumber = $faker->numberBetween(0, count($products) - 1);
 
     return [
         'name' => $products[$randomNumber][0],
         'ean' => $faker->ean13,
         'product_type_id' => $products[$randomNumber][1],
         'color' => $faker->colorName,
-        'image' => 'public/no_image.png'
+        'image' => 'images/no_image.png'
     ];
 });
