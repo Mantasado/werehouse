@@ -16,7 +16,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAll()
     {
-        return $this->product->paginate(10);
+        return $this->product->where('active', '0')->paginate(10);
     }
 
     public function getById($id)
