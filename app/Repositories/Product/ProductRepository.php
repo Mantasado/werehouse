@@ -16,7 +16,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAll()
     {
-        return $this->product->where('active', '0')->paginate(10);
+        return $this->product->where('active', '0');
     }
 
     public function getById($id)
@@ -26,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function create(array $attributes)
     {
-        return $this->product->created($attributes);
+        return $this->product->create($attributes);
     }
 
     public function update($id, array $attributes)

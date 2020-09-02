@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Product\ProductTypeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
 
     private $productRepository;
+    private $productTypeRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, ProductTypeRepositoryInterface $productTypeRepository)
     {
         $this->productRepository = $productRepository;
+        $this->productTypeRepository = $productTypeRepository;
     }
 
     /**
@@ -23,7 +27,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->productRepository->getAll();
+        $products = $this->productRepository->getAll()->paginate(10);
 
         return view('product.index', compact('products'));
     }
@@ -35,7 +39,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $types = $this->productTypeRepository->getAll();
+        
+        return view('product.create', compact('types'));
     }
 
     /**
@@ -46,7 +52,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|max:50',
+            'ean' => 'required|digits:13',
+            'product_type_id' => 'required',
+            'color' => 'required|alpha|max:20',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $validateData['image'] = $this->storeImage();
+        
+        $this->productRepository->create($validateData);
+
+        return redirect('/');
     }
 
     /**
@@ -92,5 +110,14 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function storeImage()
+    {
+
+        if(request()->has('image'))
+        {
+            return request()->image->store('images', 'public');
+        }
     }
 }
