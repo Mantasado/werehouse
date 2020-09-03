@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="mb-1">
-<a href="/create" class="btn btn-primary">{{ __('New product') }}</a>
-<a href="/removed" class="btn btn-secondary float-right">{{ __('Removed products') }}</a>
+<a href="/" class="btn btn-secondary">{{ __('Back to list') }}</a>
 </div>
     <table class="table table-hover">
         <thead>
@@ -31,11 +30,16 @@
                         <td>{{ $product->ean }}</td>
                         <td>{{ $product->productType->name }}</td>
                         <td>{{ $product->color }}</td>
-                        <td><a href="/update/{{ $product->id }}/edit" class="btn btn-secondary">{{ __('Edit') }}</a>
-                            <form class="d-inline-block" action="{{ route('destroy.product', $product->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger">{{ __('Remove') }}</button>
+                        <td>
+                            <form class="d-inline-block" action="{{ route('restore.product', $product->id) }}" method="POST">
+                                @method('PATCH')
+                                @csrf
+                                <button class="btn btn-primary">{{ __('Restore') }}</button>
+                            </form>
+                            <form class="d-inline-block" action="{{ route('remove.product', $product->id) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger">{{ __('Delete') }}</button>
                             </form>
                         </td>
                     </tr>
@@ -47,7 +51,5 @@
             @endif
         </tbody>
       </table>
-        <div class="d-flex justify-content-center">
-            {{ $products->links() }}
-        </div>
+
 @endsection

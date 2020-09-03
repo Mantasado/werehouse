@@ -28,3 +28,18 @@ Route::patch('/update/{product}', [
     'as' => 'update.product',
     'uses' => 'ProductController@update'
 ]);
+Route::delete('/delete/{product}', [
+    'as' => 'destroy.product',
+    'uses' => 'ProductController@destroy'
+]);
+Route::get('/removed', 'ProductController@removedProducts');
+Route::patch('/product/restore/{product}', [
+    'as' => 'restore.product',
+    'uses' => 'ProductController@restore'
+]);
+Route::delete('/remove/{product}', [
+    'as' => 'remove.product',
+    'uses' => 'ProductController@forceDelete'
+]);
+
+//Route::resource('product', 'ProductController');

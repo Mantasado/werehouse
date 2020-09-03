@@ -38,6 +38,21 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function delete($id)
     {
-        return $this->product->getById($id)->delete();
+        return $this->product->findOrFail($id)->delete();
+    }
+
+    public function getRemoved()
+    {
+        return $this->product->onlyTrashed()->get();
+    }
+
+    public function findRemoved($id)
+    {
+        return $this->product->onlyTrashed()->findOrFail($id);
+    }
+
+    public function forceDelete($id)
+    {
+        return $this->product->onlyTrashed()->findOrFail($id)->forceDelete();
     }
 }

@@ -116,7 +116,33 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        
+        $this->productRepository->delete($product->id);
+
+        return redirect('/');
+    }
+
+    public function removedProducts()
+    {
+        $products = $this->productRepository->getRemoved();
+
+        return view('product.removed', compact('products'));
+    }
+
+    public function restore($id)
+    {
+        $this->productRepository->findRemoved($id)->restore();
+
+        return redirect('/removed');
+    }
+
+    public function forceDelete($id)
+    {
+        $findRemovedProduct = $this->productRepository->findRemoved($id);
+
+        $this->deleteStoredImage($findRemovedProduct->image);
+        $this->productRepository->forceDelete($id);
+
+        return redirect('/removed');
     }
 
     public function storeImage()
@@ -148,12 +174,10 @@ class ProductController extends Controller
 
         $default = 'images/no_image.png';
 
-        if(request()->has('image'))
+        if($imageName != $default)
         {
-            if($imageName != $default)
-            {
-                Storage::delete('public/' .$imageName);
-            }
+            Storage::delete('public/' .$imageName);
         }
+
     }
 }

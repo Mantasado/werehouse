@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('color', 20);
             $table->boolean('active')->default(0);
             $table->string('image', 100)->default('public/no_image.png');
-            $table->boolean('is_deleted')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
