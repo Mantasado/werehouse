@@ -21,7 +21,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getById($id)
     {
-        return $this->product->findById($id);
+        return $this->product->findOrFail($id);
     }
 
     public function create(array $attributes)

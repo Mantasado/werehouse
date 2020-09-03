@@ -52,15 +52,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required|max:50',
-            'ean' => 'required|digits:13',
-            'product_type_id' => 'required',
-            'color' => 'required|alpha|max:20',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+        $validateData = $this->requestValidation($request);
 
-        $validateData['image'] = $this->storeImage();
+        if($request->has('image'))
+        {
+            $validateData['image'] = $this->storeImage();
+        }
         
         $this->productRepository->create($validateData);
 
@@ -86,7 +83,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $types = $this->productTypeRepository->getAll();
+        return view('product.edit', compact('product', 'types'));
     }
 
     /**
@@ -98,7 +96,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validateData = $this->requestValidation($request);
+
+        if($request->has('image'))
+        {
+            $this->deleteStoredImage($product->image);
+            $validateData['image'] = $this->storeImage();
+        }
+
+        $this->productRepository->update($product->id, $validateData);
+        return redirect('/');
     }
 
     /**
@@ -109,15 +116,44 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        
     }
 
     public function storeImage()
     {
+        $imageDirectory = 'public/images';
 
         if(request()->has('image'))
         {
+            if(!Storage::files($imageDirectory))
+            {
+               Storage::makeDirectory($imageDirectory);
+            };
             return request()->image->store('images', 'public');
+        }
+    }
+
+    public function requestValidation($request)
+    {
+        return $request->validate([
+            'name' => 'required|max:50',
+            'ean' => 'required|digits:13',
+            'product_type_id' => 'required',
+            'color' => 'required|alpha|max:20',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+    }
+
+    public function deleteStoredImage($imageName) {
+
+        $default = 'images/no_image.png';
+
+        if(request()->has('image'))
+        {
+            if($imageName != $default)
+            {
+                Storage::delete('public/' .$imageName);
+            }
         }
     }
 }
