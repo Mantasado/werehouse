@@ -11,7 +11,8 @@
     </div>
 @endif
 <div class="col-4 bg-light pt-1 pb-1">
-    <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('update.product', $product) }}" enctype="multipart/form-data">
+        @method('PATCH')
         @include('product.form')
     <button type="submit" class="btn btn-primary">Submit</button>
     </form>

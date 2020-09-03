@@ -30,7 +30,7 @@
                         <td>{{ $product->ean }}</td>
                         <td>{{ $product->productType->name }}</td>
                         <td>{{ $product->color }}</td>
-                        <td><a href="#" class="btn btn-secondary mr-1">{{ __('Edit') }}</a><a href="#" class="btn btn-danger">{{ __('Delete') }}</a></td>
+                        <td><a href="/update/{{ $product->id }}/edit" class="btn btn-secondary mr-1">{{ __('Edit') }}</a><a href="#" class="btn btn-danger">{{ __('Delete') }}</a></td>
                     </tr>
                 @endforeach
             @else
