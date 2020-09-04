@@ -27,7 +27,7 @@
                                 {{ asset('storage/images/no_image.png')}}
                             @endif
                             " alt="{{ $product->name }}"></td>
-                        <td>{{ $product->name }}</td>
+                        <td><a href="/show/{{ $product->id }}">{{ $product->name }}</a></td>
                         <td>{{ $product->ean }}</td>
                         <td>{{ $product->productType->name }}</td>
                         <td>{{ $product->color }}</td>

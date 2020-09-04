@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,6 +25,7 @@ class Product extends Model
 
     public function productDetails()
     {
-        return $this->hasMany(ProductDetails::class);
+        $date = Carbon::now()->subDays(90);
+        return $this->hasMany(ProductDetails::class)->where('created_at', '>', $date);
     }
 }

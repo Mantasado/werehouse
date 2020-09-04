@@ -70,9 +70,11 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = $this->productRepository->getById($id);
+
+        return view('product.show', compact('product'));
     }
 
     /**
@@ -114,9 +116,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $this->productRepository->delete($product->id);
+        $this->productRepository->delete($id);
 
         return redirect('/');
     }

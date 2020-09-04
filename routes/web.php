@@ -23,6 +23,7 @@ Route::post('/store', [
     'as' => 'store',
     'uses' =>'ProductController@store'
 ]);
+Route::get('/show/{product}', 'ProductController@show');
 Route::get('/update/{product}/edit', 'ProductController@edit');
 Route::patch('/update/{product}', [
     'as' => 'update.product',
@@ -42,4 +43,4 @@ Route::delete('/remove/{product}', [
     'uses' => 'ProductController@forceDelete'
 ]);
 
-//Route::resource('product', 'ProductController');
+// Route::resource('product', 'ProductController');
