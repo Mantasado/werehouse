@@ -42,5 +42,8 @@ Route::delete('/remove/{product}', [
     'as' => 'remove.product',
     'uses' => 'ProductController@forceDelete'
 ]);
-
+Route::post('/store/{product}/details', [
+    'as' => 'store.details',
+    'uses' =>'ProductDetailsController@store'
+]);
 // Route::resource('product', 'ProductController');

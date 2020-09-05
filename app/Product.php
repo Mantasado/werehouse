@@ -26,6 +26,6 @@ class Product extends Model
     public function productDetails()
     {
         $date = Carbon::now()->subDays(90);
-        return $this->hasMany(ProductDetails::class)->where('created_at', '>', $date);
+        return $this->hasMany(ProductDetails::class)->where('created_at', '>', $date)->latest();
     }
 }

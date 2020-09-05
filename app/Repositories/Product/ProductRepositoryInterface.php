@@ -16,7 +16,11 @@ interface ProductRepositoryInterface
 
     public function getRemoved();
 
-    public function findRemoved($id);
+    public function getRemovedById($id);
+
+    public function restoreRemoved($id);
 
     public function forceDelete($id);
+
+    public function storeProductDetails($id, array $attributes);
 }

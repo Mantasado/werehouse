@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\ProductDetails;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductDetailsController extends Controller
 {
+
+    private $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +43,11 @@ class ProductDetailsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id, Request $request)
     {
-        //
+        $this->productService->createProductDetails($id, $request);
+
+        return redirect()->back();
     }
 
     /**

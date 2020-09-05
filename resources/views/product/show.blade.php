@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<div class="bg-light pt-1 pb-1">
+    <form class="form-inline" method="POST" action="{{ route('store.details', $product->id) }}">
+        @csrf
+        <div class="ml-2 form-group">
+            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity">
+        </div>
+        <div class="ml-2 form-group">
+            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="price" name="price" placeholder="Price">
+        </div>
+    <button type="submit" class="ml-2 btn btn-primary">Submit</button>
+</form>
+</div>
 <table class="table table-hover">
     <thead>
         <tr>

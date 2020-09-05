@@ -18,7 +18,7 @@ class CreateProductDetailsTable extends Migration
             $table->unsignedBigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('quantity');
-            $table->double('price', 4, 2);
+            $table->double('price', 8, 2);
             $table->timestamps();
         });
     }

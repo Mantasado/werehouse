@@ -16,7 +16,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAll()
     {
-        return $this->product->where('active', '0');
+        return $this->product->where('active', '0')->latest()->paginate(10);
     }
 
     public function getById($id)
@@ -46,13 +46,25 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->product->onlyTrashed()->get();
     }
 
-    public function findRemoved($id)
+    public function getRemovedById($id)
     {
         return $this->product->onlyTrashed()->findOrFail($id);
+    }
+
+    public function restoreRemoved($id)
+    {
+        return $this->product->onlyTrashed()->findOrFail($id)->restore();
     }
 
     public function forceDelete($id)
     {
         return $this->product->onlyTrashed()->findOrFail($id)->forceDelete();
+    }
+
+    public function storeProductDetails($id, array $attributes)
+    {
+        $product = $this->product->findOrFail($id);
+
+        return $product->productDetails()->create($attributes);
     }
 }
