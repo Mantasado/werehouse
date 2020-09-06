@@ -14,7 +14,7 @@ class ProductDetailsController extends Controller
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
-
+        $this->middleware('auth');
     }
 
     /**

@@ -19,6 +19,9 @@
     <!-- Styles -->
     <!-- Issue with "npm dev run", to save time using direct link to bootstrap <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" > -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -42,11 +45,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('auth_form.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('auth_form.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -68,6 +71,28 @@
                                 </div>
                             </li>
                         @endguest
+                        <div class="dropdown">
+                            <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if (Config::get('app.locale') == 'lt')
+                                    <img src="{{ asset('storage/images/lithuania-flag-round-icon-16.png') }}" alt="LT"> {{ __('Lietuvių') }}
+                                @elseif (Config::get('app.locale') == 'en')
+                                    <img src="{{ asset('storage/images/united-kingdom-flag-round-icon-16.png') }}" alt="ENG"> {{ __('English') }}
+                                @endif
+                            </a>
+                          
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item 
+                                @if (Config::get('app.locale') == 'lt')
+                                    active
+                                @endif
+                                " href="/lang/lt"><img src="{{ asset('storage/images/lithuania-flag-round-icon-16.png') }}" alt="LT"> {{ __('Lietuvių') }}</a>
+                                <a class="dropdown-item 
+                                @if (Config::get('app.locale') == 'en')
+                                    active
+                                @endif
+                                " href="/lang/en"><img src="{{ asset('storage/images/united-kingdom-flag-round-icon-16.png') }}" alt="ENG"> {{ __('English') }}</a>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>

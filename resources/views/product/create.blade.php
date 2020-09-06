@@ -13,6 +13,6 @@
 <div class="col-4 bg-light pt-1 pb-1">
     <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
         @include('product.form')
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ __('products.submit') }}</button>
     </form>
 @endsection

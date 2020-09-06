@@ -14,6 +14,6 @@
     <form method="POST" action="{{ route('update.product', $product->id) }}" enctype="multipart/form-data">
         @method('PATCH')
         @include('product.form')
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ __('products.submit') }}</button>
     </form>
 @endsection

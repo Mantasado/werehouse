@@ -14,20 +14,20 @@
     <form class="form-inline" method="POST" action="{{ route('store.details', $product->id) }}">
         @csrf
         <div class="ml-2 form-group">
-            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity">
+            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="{{ __('products.quantity') }}">
         </div>
         <div class="ml-2 form-group">
-            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="price" name="price" placeholder="Price">
+            <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="price" name="price" placeholder="{{ __('products.price') }}">
         </div>
-    <button type="submit" class="ml-2 btn btn-primary">Submit</button>
+    <button type="submit" class="ml-2 btn btn-primary">{{ __('products.submit') }}</button>
 </form>
 </div>
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">{{ __('Quantity') }}</th>
-            <th scope="col">{{ __('Price') }}</th>
-            <th scope="col">{{ __('Date') }}</th>
+            <th scope="col">{{ __('products.quantity') }}</th>
+            <th scope="col">{{ __('products.price') }}</th>
+            <th scope="col">{{ __('products.date') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
             @endforeach
         @else
             <tr>
-                <td>{{ __('No records found') }}</td>
+                <td>{{ __('products.no_records_found') }}</td>
             </tr>
         @endif
     </tbody>
