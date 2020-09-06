@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
-use App\Repositories\Product\ProductRepositoryInterface;
-use App\Repositories\Product\ProductTypeRepositoryInterface;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -129,6 +126,12 @@ class ProductController extends Controller
         $this->productService->forceDeleteProduct($id);
 
         return redirect('/removed');
+    }
+
+    public function getAll()
+    {
+
+        return $this->productService->getAllProducts();
     }
 
 }
