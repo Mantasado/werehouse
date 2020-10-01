@@ -24,7 +24,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->productService->getAllProducts();
-
         return view('product.index', compact('products'));
     }
 
@@ -36,7 +35,6 @@ class ProductController extends Controller
     public function create()
     {
         $types = $this->productService->getAllProductTypes();
-        
         return view('product.create', compact('types'));
     }
 
@@ -48,8 +46,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $this->productService->createProduct($request);
-
+        $validateData = $this->requestValidation($request);
+        $this->productService->createProduct($validateData);
         return redirect('/');
     }
 
@@ -62,7 +60,6 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productService->findProductById($id);
-
         return view('product.show', compact('product'));
     }
 
@@ -76,7 +73,6 @@ class ProductController extends Controller
     {
         $product = $this->productService->findProductById($id);
         $types = $this->productService->getAllProductTypes();
-
         return view('product.edit', compact('product', 'types'));
     }
 
@@ -89,8 +85,8 @@ class ProductController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->productService->updateProduct($id, $request);
-
+        $validateData = $this->requestValidation($request);
+        $this->productService->updateProduct($id, $validateData);
         return redirect('/');
     }
 
@@ -103,35 +99,41 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productService->deleteProduct($id);
-
         return redirect('/');
     }
 
     public function removedProducts()
     {
         $products = $this->productService->getRemovedProducts();
-
         return view('product.removed', compact('products'));
     }
 
     public function restore($id)
     {
         $this->productService->restoreRemovedProduct($id);
-
         return redirect('/removed');
     }
 
     public function forceDelete($id)
     {
         $this->productService->forceDeleteProduct($id);
-
         return redirect('/removed');
     }
 
     public function getAll()
     {
-
         return $this->productService->getAllProducts();
+    }
+
+    public function requestValidation($request)
+    {
+        return $request->validate([
+            'name' => 'required|max:50',
+            'ean' => 'required|digits:13',
+            'product_type_id' => 'required',
+            'color' => 'required|alpha|max:20',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
     }
 
 }

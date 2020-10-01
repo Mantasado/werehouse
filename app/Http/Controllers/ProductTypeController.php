@@ -18,6 +18,5 @@ class ProductTypeController extends Controller
     public function index()
     {
         return $this->productTypeRepository->getAll();
-
     }
 }

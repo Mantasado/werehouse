@@ -17,59 +17,99 @@ class ProductService
         $this->productTypeRepository = $productTypeRepository;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     */
+
     public function getAllProducts()
     {
         return $this->ProductRepository->getAll();
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     */
     public function createProduct($request)
     {
-        $validateData = $this->requestValidation($request);
-
         if(request()->has('image'))
         {
-            $validateData['image'] = $this->storeImage();
+            $request['image'] = $this->storeImage();
         }
 
-        return $this->ProductRepository->create($validateData);
+        return $this->ProductRepository->create($request);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     */
 
     public function getAllProductTypes()
     {
         return $this->productTypeRepository->getAll();
     }
 
+    /**
+     * Display the specified resource.
+     *
+     */
+
     public function findProductById($id)
     {
         return $this->ProductRepository->getById($id);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     */
+
     public function updateProduct($id, $request)
     {
-        $validateData = $this->requestValidation($request);
-
         if(request()->has('image'))
         {
-            $validateData['image'] = $this->storeImage();
+            $request['image'] = $this->storeImage();
         }
 
-        return $this->ProductRepository->update($id, $validateData);
+        return $this->ProductRepository->update($id, $request);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     */
 
     public function deleteProduct($id)
     {
         return $this->ProductRepository->delete($id);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     */
+
     public function getRemovedProducts()
     {
         return $this->ProductRepository->getRemoved();
     }
     
+    /**
+     * Restore the specified resource that was soft deleted.
+     *
+     */
+
     public function restoreRemovedProduct($id)
     {
         return $this->ProductRepository->restoreRemoved($id);
     }
+
+    /**
+     * Remove the specified soft deleted resource from storage.
+     *
+     */
 
     public function forceDeleteProduct($id)
     {
@@ -78,6 +118,11 @@ class ProductService
 
         return $this->ProductRepository->forceDelete($id);
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     */
 
     public function createProductDetails($id, $request)
     {
@@ -89,16 +134,10 @@ class ProductService
         return $this->ProductRepository->storeProductDetails($id, $validateData);
     }
 
-    public function requestValidation($request)
-    {
-        return $request->validate([
-            'name' => 'required|max:50',
-            'ean' => 'required|digits:13',
-            'product_type_id' => 'required',
-            'color' => 'required|alpha|max:20',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     */
 
     public function storeImage()
     {
@@ -111,6 +150,11 @@ class ProductService
         return request()->image->store('images', 'public');
 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     */
 
     public function deleteStoredImage($imageName) {
 

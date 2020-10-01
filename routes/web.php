@@ -48,4 +48,3 @@ Route::post('/store/{product}/details', [
     'as' => 'store.details',
     'uses' =>'ProductDetailsController@store'
 ]);
-// Route::resource('product', 'ProductController');
